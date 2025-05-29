@@ -23,8 +23,8 @@ const VoiceInput = ({ onTranscript }: VoiceInputProps) => {
       return;
     }
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const newRecognition = new SpeechRecognition();
+    const SpeechRecognitionAPI = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const newRecognition = new SpeechRecognitionAPI();
     
     newRecognition.continuous = true;
     newRecognition.interimResults = true;
@@ -38,7 +38,7 @@ const VoiceInput = ({ onTranscript }: VoiceInputProps) => {
       });
     };
 
-    newRecognition.onresult = (event) => {
+    newRecognition.onresult = (event: any) => {
       let finalTranscript = '';
       
       for (let i = event.resultIndex; i < event.results.length; i++) {
@@ -52,7 +52,7 @@ const VoiceInput = ({ onTranscript }: VoiceInputProps) => {
       }
     };
 
-    newRecognition.onerror = (event) => {
+    newRecognition.onerror = (event: any) => {
       console.error('Speech recognition error:', event.error);
       setIsListening(false);
       toast({

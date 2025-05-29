@@ -36,6 +36,10 @@ const Index = () => {
 
   const handleVoiceInput = (transcript: string) => {
     setUserInput(transcript);
+    toast({
+      title: "Voice Input Received",
+      description: "Your voice has been transcribed successfully.",
+    });
   };
 
   const handleGeneratePrompt = () => {
@@ -89,9 +93,10 @@ const Index = () => {
         description: "Response received from Gemini AI.",
       });
     } catch (error) {
+      console.error('Gemini API Error:', error);
       toast({
         title: "Error",
-        description: "Failed to send prompt to Gemini. Please check your API key.",
+        description: "Failed to send prompt to Gemini. Please check your API key and try again.",
         variant: "destructive",
       });
     } finally {
@@ -99,12 +104,21 @@ const Index = () => {
     }
   };
 
-  const handleCopyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    toast({
-      title: "Copied!",
-      description: "Text copied to clipboard.",
-    });
+  const handleCopyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast({
+        title: "Copied!",
+        description: "Text copied to clipboard.",
+      });
+    } catch (error) {
+      console.error('Copy failed:', error);
+      toast({
+        title: "Copy Failed",
+        description: "Unable to copy to clipboard. Please try manually selecting the text.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handlePaymentSuccess = () => {
@@ -144,6 +158,11 @@ const Index = () => {
           {!isUnlocked && (
             <Badge variant="outline" className="mt-2 border-orange-500 text-orange-600">
               Free Trial - Upgrade for Full Access
+            </Badge>
+          )}
+          {isUnlocked && (
+            <Badge variant="outline" className="mt-2 border-green-500 text-green-600">
+              Pro Version Activated
             </Badge>
           )}
         </div>

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Mic, MicOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface VoiceInputProps {
   onTranscript: (transcript: string) => void;
@@ -12,6 +13,7 @@ const VoiceInput = ({ onTranscript }: VoiceInputProps) => {
   const [isListening, setIsListening] = useState(false);
   const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
   const { toast } = useToast();
+  const isMobile = useIsMobile();
 
   const startListening = () => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
@@ -36,6 +38,7 @@ const VoiceInput = ({ onTranscript }: VoiceInputProps) => {
         toast({
           title: "Listening...",
           description: "Speak now to input your prompt.",
+          duration: 2000,
         });
       };
 
@@ -90,16 +93,16 @@ const VoiceInput = ({ onTranscript }: VoiceInputProps) => {
     <Button
       variant={isListening ? "destructive" : "outline"}
       onClick={isListening ? stopListening : startListening}
-      className="w-full"
+      className={`w-full ${isMobile ? 'text-sm py-3' : 'text-base'} transition-all duration-200`}
     >
       {isListening ? (
         <>
-          <MicOff className="h-4 w-4 mr-2" />
+          <MicOff className={`${isMobile ? 'h-4 w-4' : 'h-4 w-4'} mr-2 animate-pulse`} />
           Stop Recording
         </>
       ) : (
         <>
-          <Mic className="h-4 w-4 mr-2" />
+          <Mic className={`${isMobile ? 'h-4 w-4' : 'h-4 w-4'} mr-2`} />
           Voice Input
         </>
       )}

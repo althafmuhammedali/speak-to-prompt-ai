@@ -1,4 +1,3 @@
-
 export interface PromptFramework {
   id: string;
   name: string;
@@ -485,5 +484,137 @@ Blue (Unexpected/Creative):
 - What unconventional or surprising approaches exist?
 - What "blue sky" thinking could be applied?
 - What wildly creative solutions might work?`
+  },
+  {
+    id: 'code-review-optimization',
+    name: 'Code Review & Optimization (Dev)',
+    description: 'Expert code analysis and optimization guidance',
+    template: `Context: I have code that needs professional review and optimization: {input}
+
+Layout: Please structure your analysis with:
+- Code quality assessment
+- Performance bottlenecks identification
+- Security vulnerabilities check
+- Best practices evaluation
+
+Examples: Provide specific code snippets with before/after improvements where applicable.
+
+Audience: Target this for professional developers seeking expert-level insights.
+
+Requirements: 
+- Focus on performance, security, maintainability, and scalability
+- Provide actionable recommendations with priority levels (Critical/High/Medium/Low)
+- Include modern best practices and industry standards
+- Suggest specific tools, libraries, or patterns where relevant`
+  },
+  {
+    id: 'ux-audit-template',
+    name: 'UX Audit & Analysis (Design)',
+    description: 'Comprehensive user experience evaluation',
+    template: `Request: Conduct a comprehensive UX audit for: {input}
+
+Reason: Explain the current user journey pain points and usability issues based on UX principles
+Elaborate: Provide detailed analysis of:
+- User flows and information architecture
+- Accessibility compliance (WCAG guidelines)
+- Design patterns and consistency
+- Mobile responsiveness and cross-platform experience
+
+Anticipate: Address potential user scenarios, edge cases, and accessibility needs that might cause friction
+Conclude: Summarize key findings with impact assessment and priority ranking
+Teach: Provide actionable design recommendations following industry best practices and design systems principles
+
+Include specific metrics to track improvement and suggest A/B testing opportunities.`
+  },
+  {
+    id: 'tech-architecture-decision',
+    name: 'Technical Architecture Decision (Dev)',
+    description: 'SWOT analysis for technology choices',
+    template: `Please conduct a comprehensive SWOT analysis for implementing: {input}
+
+Strengths:
+- Technical advantages and performance capabilities
+- Developer experience and productivity improvements
+- Ecosystem and community support
+- Integration capabilities and compatibility
+
+Weaknesses:
+- Implementation complexity and challenges
+- Learning curve and skill requirements
+- Resource constraints and costs
+- Technical limitations
+
+Opportunities:
+- Future scalability and growth potential
+- Innovation and competitive advantages
+- Market trends alignment
+- Integration possibilities with existing tech stack
+
+Threats:
+- Technical debt and maintenance risks
+- Vendor lock-in or dependency issues
+- Security vulnerabilities
+- Obsolescence and future-proofing concerns
+
+Provide specific recommendations with implementation roadmap and risk mitigation strategies.`
+  },
+  {
+    id: 'design-system-component',
+    name: 'Design System Component (Design)',
+    description: 'Complete component specification framework',
+    template: `Create a comprehensive design system component specification for: {input}
+
+Features:
+- Visual specifications (colors, typography, spacing, states, variants)
+- Interaction patterns and micro-animations
+- Responsive behavior across all breakpoints
+- Accessibility requirements (WCAG 2.1 AA compliance)
+- Component API and props structure
+
+Advantages:
+- How this component improves design consistency across products
+- Development efficiency gains and reusability benefits
+- Maintenance advantages over current ad-hoc solutions
+- Quality assurance and testing improvements
+
+Benefits:
+- Enhanced user experience and usability
+- Reduced development time and costs
+- Improved brand consistency and recognition
+- Better accessibility and inclusive design
+- Streamlined design-to-development handoff
+
+Include Figma/Sketch specifications, code examples, usage guidelines, and do's/don'ts.`
+  },
+  {
+    id: 'bug-investigation-resolution',
+    name: 'Bug Investigation & Resolution (Dev)',
+    description: 'Systematic root cause analysis for debugging',
+    template: `Bug Investigation and Root Cause Analysis for: {input}
+
+Problem Statement: [Clearly define the bug behavior vs expected behavior with reproduction steps]
+
+Why 1: Why is this bug occurring at the surface level?
+Answer: [Observable symptoms and immediate effects]
+
+Why 2: Why are these symptoms manifesting?
+Answer: [Direct technical cause in code/logic]
+
+Why 3: Why did this technical issue arise?
+Answer: [System design or implementation cause]
+
+Why 4: Why was this design/implementation chosen?
+Answer: [Process, architectural, or requirement cause]
+
+Why 5: Why did the underlying process/architecture allow this?
+Answer: [Root organizational, methodological, or fundamental cause]
+
+Include:
+- Environment details (browser, OS, device, versions)
+- Error logs and stack traces
+- Impact assessment (users affected, severity)
+- Immediate fix strategy
+- Long-term prevention measures
+- Testing strategy to prevent regression`
   }
 ];

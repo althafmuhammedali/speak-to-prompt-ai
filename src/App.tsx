@@ -10,6 +10,7 @@ import { Separator } from './components/ui/separator';
 import { Copy, Sparkles, BookOpen, Lightbulb, Target, Wand2 } from 'lucide-react';
 import { useToast } from './hooks/use-toast';
 import { Toaster } from './components/ui/toaster';
+import { DonationWidget } from './components/DonationWidget';
 
 function App() {
   const [selectedFramework, setSelectedFramework] = useState<PromptFramework | null>(null);
@@ -244,6 +245,18 @@ function App() {
       </main>
 
       <Toaster />
+      
+      {/* Donation Widget */}
+      <DonationWidget 
+        config={{
+          upiId: 'adnanmuhammad4393@okicici',
+          name: 'Muhammed Adnan',
+          amount: 99,
+          position: 'bottom-right',
+          primaryColor: '#8B5CF6',
+          buttonText: 'Donate'
+        }}
+      />
     </div>
   );
 }

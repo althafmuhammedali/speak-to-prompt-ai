@@ -1,8 +1,8 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Heart, X } from 'lucide-react';
 import { Button } from './ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 
@@ -33,6 +33,7 @@ export const DonationWidget: React.FC<DonationWidgetProps> = ({ config: userConf
   const [isOpen, setIsOpen] = useState(false);
   const [amount, setAmount] = useState(config.amount);
   const [qrLoaded, setQrLoaded] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const getPositionClasses = () => {
     switch (config.position) {
@@ -60,17 +61,23 @@ export const DonationWidget: React.FC<DonationWidgetProps> = ({ config: userConf
     params.append('tn', 'Donation');
     const upiUrl = `${baseUrl}?${params.toString()}`;
 
-    const qrContainer = document.getElementById('qr-code-canvas');
-    if (qrContainer) {
-      qrContainer.innerHTML = '';
-      window.QRCode.toCanvas(qrContainer, upiUrl, { width: 200 }, (error: any) => {
-        if (error) {
-          console.error('Error generating QR code:', error);
-          qrContainer.innerHTML = '<div class="text-red-500">Failed to generate QR code</div>';
-        } else {
-          setQrLoaded(true);
+    if (canvasRef.current) {
+      try {
+        // Clear the canvas first
+        const ctx = canvasRef.current.getContext('2d');
+        if (ctx) {
+          ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         }
-      });
+        
+        await window.QRCode.toCanvas(canvasRef.current, upiUrl, { 
+          width: 200,
+          height: 200
+        });
+        setQrLoaded(true);
+      } catch (error) {
+        console.error('Error generating QR code:', error);
+        setQrLoaded(false);
+      }
     }
   };
 
@@ -90,7 +97,8 @@ export const DonationWidget: React.FC<DonationWidgetProps> = ({ config: userConf
   };
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && canvasRef.current) {
+      setQrLoaded(false);
       generateQRCode();
     }
   }, [isOpen, amount]);
@@ -129,22 +137,24 @@ export const DonationWidget: React.FC<DonationWidgetProps> = ({ config: userConf
                 <X className="h-4 w-4" />
               </Button>
             </DialogTitle>
+            <DialogDescription>
+              Scan this QR code to make a donation
+            </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-6">
-            <p className="text-sm text-muted-foreground">
-              Scan this QR code to make a donation
-            </p>
-
             {/* QR Code Container */}
             <div className="flex justify-center">
-              <div 
-                id="qr-code-canvas"
-                className="w-[200px] h-[200px] bg-gray-100 rounded-lg flex items-center justify-center"
-              >
+              <div className="w-[200px] h-[200px] bg-gray-100 rounded-lg flex items-center justify-center">
                 {!qrLoaded && (
                   <div className="text-sm text-gray-500">Loading QR Code...</div>
                 )}
+                <canvas 
+                  ref={canvasRef}
+                  width={200}
+                  height={200}
+                  className={`rounded-lg ${qrLoaded ? 'block' : 'hidden'}`}
+                />
               </div>
             </div>
 

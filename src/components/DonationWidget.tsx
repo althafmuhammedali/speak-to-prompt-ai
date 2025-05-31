@@ -97,8 +97,8 @@ export const DonationWidget: React.FC<DonationWidgetProps> = ({ config: userConf
 
   return (
     <>
-      {/* Floating Donation Button */}
-      <div className={`fixed ${getPositionClasses()} z-50`}>
+      {/* Floating Donation Button with Watermark */}
+      <div className={`fixed ${getPositionClasses()} z-50 flex flex-col items-end gap-1`}>
         <Button
           onClick={() => setIsOpen(true)}
           className="flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300 rounded-full px-4 py-3"
@@ -107,6 +107,11 @@ export const DonationWidget: React.FC<DonationWidgetProps> = ({ config: userConf
           <Heart className="h-4 w-4 fill-current" />
           {config.buttonText}
         </Button>
+        
+        {/* Watermark */}
+        <div className="text-xs text-gray-500 font-mono bg-white/80 px-2 py-1 rounded-md shadow-sm">
+          https://codecashier.vercel.app/
+        </div>
       </div>
 
       {/* Donation Dialog */}

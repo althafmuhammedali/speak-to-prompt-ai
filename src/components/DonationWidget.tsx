@@ -147,7 +147,11 @@ export const DonationWidget: React.FC<DonationWidgetProps> = ({ config: userConf
             <div className="flex justify-center">
               <div className="w-[200px] h-[200px] bg-gray-100 rounded-lg flex items-center justify-center">
                 {!qrLoaded && (
-                  <div className="text-sm text-gray-500">Loading QR Code...</div>
+                  <img 
+                    src="/lovable-uploads/2b90bf21-a4ca-4abb-8aca-25c9513d422d.png" 
+                    alt="Donation QR Code"
+                    className="w-full h-full object-contain rounded-lg"
+                  />
                 )}
                 <canvas 
                   ref={canvasRef}
